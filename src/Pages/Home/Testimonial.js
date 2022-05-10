@@ -40,7 +40,7 @@ const Testimonial = () => {
       </div>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1500px] lg:mx-auto mx-[25px] lg:mt-[120px] mt-[50px]">
         {patientsOpinion.map((patient) => (
-          <PatientsOpinion patient={patient}></PatientsOpinion>
+          <PatientsOpinion key={patient._id} patient={patient}></PatientsOpinion>
         ))}
       </div>
       <img

@@ -12,13 +12,13 @@ const Services = () => {
             img:fluoride
         },
         {
-            _id: 1,
+            _id: 2,
             name: 'Cavity Filling',
             description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. In, delectus!',
             img:cavity
         },
         {
-            _id: 1,
+            _id: 3,
             name: 'Teeth Whitening',
             description:'Lorem ipsum dolor sit amet consectetur adipisicing elit. In, delectus!',
             img:whitening
