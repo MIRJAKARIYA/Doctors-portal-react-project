@@ -1,0 +1,14 @@
+.footer-style{
+    background-image: url('../../assets/images/footer.png');
+
+    background-size: 100%;
+    background-position: 0% 45%;
+    background-repeat: no-repeat;
+}
+.footer-title{
+    color: #939393;
+    font-size: 20px;
+}
+.footer-style span{
+    color: black;
+}
