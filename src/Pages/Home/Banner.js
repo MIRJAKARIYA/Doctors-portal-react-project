@@ -3,7 +3,7 @@ import Chair from "../../assets/images/chair.png";
 import './Banner.css';
 const Banner = () => {
   return (
-    <div className="hero w-auto mx-[25px] mt-[64px] extra-style-banner">
+    <div className="hero w-auto mx-[25px] extra-style-banner">
       <div className="w-full flex lg:py-24 flex-col-reverse items-center lg:flex-row max-w-[1400px] ">
         <div className="lg:w-1/2">
           <div className="w-full mt-[60px] lg:mt-0">
