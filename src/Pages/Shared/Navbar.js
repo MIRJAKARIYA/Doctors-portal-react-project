@@ -6,7 +6,6 @@ import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
 const Navbar = () => {
   const [user] = useAuthState(auth);
-  console.log(user)
   return (
     <div className="navbar">
       <div className="flex-1">

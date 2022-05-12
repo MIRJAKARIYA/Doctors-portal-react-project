@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 const SocialLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
   const handleGoogleSignIn = () => {
     signInWithGoogle();
@@ -17,9 +19,9 @@ const SocialLogin = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/home");
+      navigate(from,{replace:true});
     }
-  }, [user, navigate]);
+  }, [user, navigate,from]);
   return (
     <>
       {signInError}

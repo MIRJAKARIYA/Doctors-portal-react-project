@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
 import { useForm } from "react-hook-form";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -8,6 +8,9 @@ import auth from "../../firebase.init";
 const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
   const {
     register,
     formState: { errors },
@@ -19,13 +22,17 @@ const Login = () => {
   const onSubmit = (data) => {
     signInWithEmailAndPassword(data.email, data.password);
   };
-  //   if(loading){
-  //       return <p>Loading...</p>
-  //   }
+
 
   if (error) {
     signInError = <p className="text-red-500 text-xs">{error.message}</p>;
   }
+
+  useEffect(()=>{
+    if(user){
+        navigate(from,{replace:true});
+    }
+  },[user,navigate,from]);
 
   return (
     <div className="flex justify-center screen h-screen items-center">
