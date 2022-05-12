@@ -1,7 +1,12 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { GrMenu } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import auth from "../../firebase.init";
+import { signOut } from "firebase/auth";
 const Navbar = () => {
+  const [user] = useAuthState(auth);
+  console.log(user)
   return (
     <div className="navbar">
       <div className="flex-1">
@@ -11,13 +16,14 @@ const Navbar = () => {
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
-          <div className="hidden md:block mr-[80px]">
-            <Link to='/home' className="mr-[30px]">Home</Link>
-            <Link to='/about' className="mr-[30px]">About</Link>
-            <Link to='/appoinment' className="mr-[30px]">Appoinment</Link>
-            <Link to='/reviews' className="mr-[30px]">Reviews</Link>
-            <Link to='/contactus' className="mr-[30px]">Contact Us</Link>
-            <Link to='/login'>Login</Link>
+          <div className="hidden md:block">
+            <Link to='/home' className="btn btn-ghost">Home</Link>
+            <Link to='/about' className="btn btn-ghost">About</Link>
+            <Link to='/appoinment' className="btn btn-ghost">Appoinment</Link>
+            <Link to='/reviews' className="btn btn-ghost">Reviews</Link>
+            <Link to='/contactus' className="btn btn-ghost">Contact Us</Link>
+            {user?<button className="btn btn-ghost" onClick={()=>signOut(auth)}>Sign Out</button>:<Link className="btn btn-ghost" to="/login">Login</Link>}
+
           </div>
         </div>
         <div className="dropdown dropdown-end">
@@ -49,7 +55,7 @@ const Navbar = () => {
               <Link to="/contactus">Contact Us</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              {user?<button onClick={()=>signOut(auth)}>Sign Out</button>:<Link to="/login">Login</Link>}
             </li>
           </ul>
         </div>
