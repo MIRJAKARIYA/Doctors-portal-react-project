@@ -2,12 +2,12 @@ import React from "react";
 import { format } from "date-fns";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const BookingModal = ({ date, treatment,setTreatment, refetch }) => {
   const { _id, name, slots } = treatment;
   const [user] = useAuthState(auth);
-  const formattedDate = format(date, 'PP');
+  const formattedDate = format(date || new Date(), 'PP');
   const handleBooking = e =>{
       e.preventDefault();
       const slot = e.target.slot.value;

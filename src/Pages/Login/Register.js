@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useUpdateProfile } from 'react-firebase-hooks/auth';
+import useToken from "../../hooks/useToken";
 
 const Register = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const {
     register,
     formState: { errors },
@@ -22,6 +23,8 @@ const Register = () => {
   ] = useCreateUserWithEmailAndPassword(auth);
   const [updateProfile] = useUpdateProfile(auth);
 
+  const [token] = useToken(user);
+
   const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
         await updateProfile({displayName:data.name});
@@ -31,10 +34,10 @@ const Register = () => {
     registerError = <p className="text-red-500 text-xs">{error.message}</p>;
   }
   useEffect(()=>{
-      if(user){
+      if(token){
           navigate('/home');
       }
-  },[navigate,user])
+  },[navigate,token])
   return (
     <div className="flex justify-center h-screen items-center">
       <div className="max-w-[400px] card-body rounded-2xl shadow-xl">

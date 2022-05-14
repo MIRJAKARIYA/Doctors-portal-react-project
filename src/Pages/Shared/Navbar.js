@@ -8,7 +8,10 @@ import { signOut } from "firebase/auth";
 const Navbar = () => {
   const [user] = useAuthState(auth);
   const location = useLocation();
-
+  const logOut = () =>{
+    signOut(auth)
+    localStorage.removeItem('accessToken');
+  }
   return (
     <div className="navbar">
       <div className="flex-1">
@@ -47,7 +50,7 @@ const Navbar = () => {
             }
             <li>
               {user ? (
-                <button onClick={() => signOut(auth)}>Sign Out</button>
+                <button onClick={logOut}>Sign Out</button>
               ) : (
                 <Link to="/login">Login</Link>
               )}
@@ -82,7 +85,7 @@ const Navbar = () => {
               </Link>
             )}
             {user ? (
-              <button className="btn btn-ghost" onClick={() => signOut(auth)}>
+              <button className="btn btn-ghost" onClick={logOut}>
                 Sign Out
               </button>
             ) : (
