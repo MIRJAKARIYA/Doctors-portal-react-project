@@ -10,26 +10,29 @@ const MyAppoinments = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/booking?patient=${user.email}`,{
-        method:'GET',
-        headers:{
-          authorization:`Bearer ${localStorage.getItem('accessToken')}`
+      fetch(
+        `https://frozen-ravine-48916.herokuapp.com/booking?patient=${user.email}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
         }
-      })
+      )
         .then((res) => {
           console.log(res);
-          if(res.status === 401 || res.status === 403){
-            signOut(auth)
-            localStorage.removeItem('accessToken');
-            navigate('/home')
+          if (res.status === 401 || res.status === 403) {
+            signOut(auth);
+            localStorage.removeItem("accessToken");
+            navigate("/home");
           }
-          return res.json()
+          return res.json();
         })
         .then((data) => {
-          setAppoinments(data)
+          setAppoinments(data);
         });
     }
-  }, [user,navigate]);
+  }, [user, navigate]);
   return (
     <div>
       <h2>My appoinments:{appoinments?.length}</h2>
@@ -45,17 +48,15 @@ const MyAppoinments = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              appoinments?.map((appoinment,index) => <tr key={appoinment._id}>
-                    <td>{index+1}</td>
-                    <td>{appoinment.patientName}</td>
-                    <td>{appoinment.date}</td>
-                    <td>{appoinment.slot}</td>
-                    <td>{appoinment.treatment}</td>
-                  </tr>)
-            }
-
-            
+            {appoinments?.map((appoinment, index) => (
+              <tr key={appoinment._id}>
+                <td>{index + 1}</td>
+                <td>{appoinment.patientName}</td>
+                <td>{appoinment.date}</td>
+                <td>{appoinment.slot}</td>
+                <td>{appoinment.treatment}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
