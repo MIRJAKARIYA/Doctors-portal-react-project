@@ -8,12 +8,12 @@ const CheckoutForm = ({ appoinment }) => {
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
   const [clientSecret, setClientSecret] = useState("");
-  const [processing, setProcessing] = useState(false)
-  const [transactionId, setTransactionId] = useState('')
-  const { price, patientName, patient,_id } = appoinment;
+  const [processing, setProcessing] = useState(false);
+  const [transactionId, setTransactionId] = useState("");
+  const { price, patientName, patient, _id } = appoinment;
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://frozen-ravine-48916.herokuapp.com/create-payment-intent", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -68,31 +68,31 @@ const CheckoutForm = ({ appoinment }) => {
     if (intentError) {
       setCardError(intentError?.message);
       setProcessing(false);
-    } 
-    else {
+    } else {
       setCardError("");
-      setTransactionId(paymentIntent.id)
+      setTransactionId(paymentIntent.id);
       console.log(paymentIntent);
       setSuccess("Congrates Your payment is completed");
 
-
       //store payment on database
-        const payment = {
-            appoinment: _id,
-            transactionId: paymentIntent.id
-        }
+      const payment = {
+        appoinment: _id,
+        transactionId: paymentIntent.id,
+      };
 
-      fetch(`http://localhost:5000/booking/${_id}`,{
-          method:'PATCH',
-          headers:{
-            "content-type": "application/json",
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-          body:JSON.stringify(payment)
-      }).then(res=>res.json()).then(data=>{
-          setProcessing(false)
-          console.log(data)
+      fetch(`https://frozen-ravine-48916.herokuapp.com/booking/${_id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(payment),
       })
+        .then((res) => res.json())
+        .then((data) => {
+          setProcessing(false);
+          console.log(data);
+        });
     }
   };
   return (
@@ -123,11 +123,15 @@ const CheckoutForm = ({ appoinment }) => {
         </button>
       </form>
       {cardError && <p className="text-red-500">{cardError}</p>}
-      {success && <div>
-        <p className="text-green-500">{success}
-      </p>
-      <p>Your transaction Id: <span className="text-orange-500 font-bold">{transactionId}</span></p>
-          </div>}
+      {success && (
+        <div>
+          <p className="text-green-500">{success}</p>
+          <p>
+            Your transaction Id:{" "}
+            <span className="text-orange-500 font-bold">{transactionId}</span>
+          </p>
+        </div>
+      )}
     </>
   );
 };
